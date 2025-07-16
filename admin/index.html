@@ -4,38 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrador de Contenido</title>
-  <!-- 1. Cargamos el software del panel de control -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
-  <!-- 2. En lugar de un archivo, le damos la configuración directamente -->
+  <!-- 1. DEJAMOS QUE EL NAVEGADOR CARGUE TODO PRIMERO -->
+  
+  <!-- 2. Cargamos el software del panel de control -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <!-- 3. Y AHORA, LA MAGIA REAL -->
   <script>
-    const config = {
-      backend: {
-        name: "github",
-        repo: "pepsend/catalogo",
-        branch: "main",
-      },
-      media_folder: "assets/images",
-      public_folder: "/assets/images",
-      collections: [
-        {
-          name: "juegos",
-          label: "Juegos",
-          folder: "_juegos",
-          create: true,
-          slug: "{{slug}}",
-          fields: [
-            { label: "Nombre del Juego", name: "nombre", widget: "string" },
-            { label: "Precio", name: "precio", widget: "string" },
-            { label: "Portada del Juego", name: "portada", widget: "image" },
-          ],
+    // Le decimos a la ventana del navegador:
+    // "Oye, escucha. Cuando estés 100% seguro de que todo el contenido del DOM
+    // está cargado y listo, Y SOLO ENTONCES, ejecuta el siguiente código."
+    window.addEventListener('DOMContentLoaded', () => {
+      const config = {
+        backend: {
+          name: "github",
+          repo: "pepsend/catalogo",
+          branch: "main",
         },
-      ],
-    };
+        media_folder: "assets/images",
+        public_folder: "/assets/images",
+        collections: [
+          {
+            name: "juegos",
+            label: "Juegos",
+            folder: "_juegos",
+            create: true,
+            slug: "{{slug}}",
+            fields: [
+              { label: "Nombre del Juego", name: "nombre", widget: "string" },
+              { label: "Precio", name: "precio", widget: "string" },
+              { label: "Portada del Juego", name: "portada", widget: "image" },
+            ],
+          },
+        ],
+      };
 
-    // 3. Le decimos a Decap que use la configuración, PERO CON EL NOMBRE CORRECTO.
-    DecapCMS.init({ config });
+      // Ahora que estamos seguros de que DecapCMS existe, lo inicializamos.
+      DecapCMS.init({ config });
+    });
   </script>
 </body>
 </html>
