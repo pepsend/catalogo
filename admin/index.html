@@ -10,10 +10,10 @@
 <body>
   <!-- 2. En lugar de un archivo, le damos la configuración directamente -->
   <script>
-    var config = {
+    const config = {
       backend: {
         name: "github",
-        repo: "pepsend/catalogo", // La ruta a tu repositorio
+        repo: "pepsend/catalogo",
         branch: "main",
       },
       media_folder: "assets/images",
@@ -34,8 +34,8 @@
       ],
     };
 
-    // 3. Le decimos a Decap que use la configuración que acabamos de escribir
-    CMS.init({ config });
+    // 3. Le decimos a Decap que use la configuración, PERO CON EL NOMBRE CORRECTO.
+    DecapCMS.init({ config });
   </script>
 </body>
 </html>
