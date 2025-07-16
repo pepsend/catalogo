@@ -4,14 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrador de Contenido</title>
-  
-  <!-- ¡AQUÍ ESTÁ EL CABLE QUE FALTABA! -->
-  <!-- Esta línea le dice al script dónde encontrar su configuración. -->
-  <link href="config.yml" type="text/yaml" rel="cms-config-url">
-
+  <!-- 1. Cargamos el software del panel de control -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
-  <!-- Esto carga el software del panel de administración -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- 2. En lugar de un archivo, le damos la configuración directamente -->
+  <script>
+    var config = {
+      backend: {
+        name: "github",
+        repo: "pepsend/catalogo", // La ruta a tu repositorio
+        branch: "main",
+      },
+      media_folder: "assets/images",
+      public_folder: "/assets/images",
+      collections: [
+        {
+          name: "juegos",
+          label: "Juegos",
+          folder: "_juegos",
+          create: true,
+          slug: "{{slug}}",
+          fields: [
+            { label: "Nombre del Juego", name: "nombre", widget: "string" },
+            { label: "Precio", name: "precio", widget: "string" },
+            { label: "Portada del Juego", name: "portada", widget: "image" },
+          ],
+        },
+      ],
+    };
+
+    // 3. Le decimos a Decap que use la configuración que acabamos de escribir
+    CMS.init({ config });
+  </script>
 </body>
 </html>
