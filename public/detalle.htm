@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- El título ahora cambiará dinámicamente -->
+    <title>Detalles del Producto</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primario: #007bff;
+            --color-fondo: #121212;
+            --color-superficie: #1e1e1e;
+            --color-texto-principal: #ffffff;
+            --color-texto-secundario: #a0a0a0;
+            --color-borde: #333333;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto-principal);
+        }
+        header {
+            background-color: var(--color-superficie);
+            padding: 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--color-borde);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primario);
+        }
+        main {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* --- LA NUEVA TARJETA DE RESUMEN DEL PRODUCTO --- */
+        .producto-resumen {
+            background-color: var(--color-superficie);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--color-borde);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .producto-resumen h2 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            color: var(--color-texto-principal);
+        }
+        .producto-resumen p {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--color-primario);
+            font-weight: 600;
+        }
+        /* --- FIN DE LA TARJETA --- */
+
+        .descripcion-box {
+            background-color: var(--color-superficie);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--color-borde);
+        }
+        .descripcion-box h3 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: var(--color-primario);
+        }
+        .descripcion-box p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--color-texto-secundario);
+        }
+        .boton-whatsapp {
+            display: inline-block;
+            background-color: #25D366; /* Color de WhatsApp */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 25px;
+            font-size: 1.2rem;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .boton-whatsapp:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background-color: var(--color-superficie);
+            border-top: 1px solid var(--color-borde);
+            color: var(--color-texto-secundario);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Game Deals</h1>
+    </header>
+    <main>
+        <!-- HTML: El nuevo contenedor para el resumen del juego -->
+        <div id="producto-resumen-container" class="producto-resumen">
+            <!-- El nombre y el precio se cargarán aquí con JavaScript -->
+        </div>
+
+        <div class="descripcion-box">
+            <h3>Cómo Funciona el Producto</h3>
+            <p>
+                <strong>Cuenta Principal:</strong> Disfruta acceso inmediato al juego o suscripción directamente desde tu perfil de Xbox al vincular un correo y contraseña. Esta opción te permite jugar sin complicaciones, sin necesidad de canjear códigos, y a un precio mucho más accesible. Perfecta para quienes valoran la rapidez, la comodidad y el ahorro. 🎮✨
+            </p>
+            <a href="#" id="whatsapp-link" class="boton-whatsapp" target="_blank" rel="noopener noreferrer">
+                Comprar Ahora por WhatsApp
+            </a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Tu Marca. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const nombreJuego = params.get('juego');
+            const precioJuego = params.get('precio');
+
+            // --- ¡AQUÍ ESTÁ LA MAGIA! ---
+            
+            // 1. Mostramos los datos del juego en la nueva tarjeta de resumen
+            const resumenContainer = document.getElementById('producto-resumen-container');
+            if (nombreJuego && precioJuego) {
+                resumenContainer.innerHTML = `
+                    <h2>${nombreJuego}</h2>
+                    <p>${precioJuego}</p>
+                `;
+                // Actualizamos el título de la página
+                document.title = `${nombreJuego} - Detalles`;
+            } else {
+                resumenContainer.innerHTML = `<h2>Detalles del Producto</h2>`;
+            }
+
+            // 2. Construimos el mensaje de WhatsApp enriquecido
+            const telefono = '56992220014'; 
+            const nombreEnNegrita = `*${nombreJuego || 'un juego'}*`;
+            const linkDelJuego = window.location.href;
+            const mensajeBase = `Hola, estoy interesado en el juego: ${nombreEnNegrita}.\n\nHe leído todo el apartado de descripción.\n\nLink de referencia: ${linkDelJuego}`;
+            const mensajeCodificado = encodeURIComponent(mensajeBase);
+
+            // 3. Lógica del enlace inteligente para móvil/escritorio
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let linkFinal;
+
+            if (isMobile) {
+                linkFinal = `whatsapp://send?phone=${telefono}&text=${mensajeCodificado}`;
+            } else {
+                linkFinal = `https://api.whatsapp.com/send?phone=${telefono}&text=${mensajeCodificado}`;
+            }
+            
+            document.getElementById('whatsapp-link').href = linkFinal;
+        });
+    </script>
+</body>
+</html>
