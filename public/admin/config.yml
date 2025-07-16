@@ -2,15 +2,16 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "assets/uploads"         # Donde el CMS subirá las imágenes
+public_folder: "/assets/uploads"       # Cómo accedemos a ellas desde la web
 
 collections:
-  - name: "posts"
-    label: "Posts"
-    folder: "posts"
+  - name: "juegos"
+    label: "Juegos"
+    folder: "_juegos"                  # Carpeta de tu colección real
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Nombre", name: "nombre", widget: "string" }
+      - { label: "Precio", name: "precio", widget: "string" }
+      - { label: "Caratula", name: "caratula", widget: "image" }
